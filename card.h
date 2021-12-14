@@ -1,7 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
 #include <string>
-enum Rank { NORANK, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
+enum Rank { NORANK, ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
   NINE, TEN, JACK, QUEEN, KING };
 enum Suit { NOSUIT, DIAMOND, CLUB, HEART, SPADE };
 

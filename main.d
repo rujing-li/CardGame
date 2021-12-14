@@ -1,1 +1,1 @@
-main.o: main.cc card.h deck.h
+main.o: main.cc card.h deck.h table.h
