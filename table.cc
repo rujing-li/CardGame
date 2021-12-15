@@ -48,6 +48,11 @@ std::vector<int> Table::potentialLegalPlays(Deck & deck) {
     std::deque<int> & list = fourSuits[i];
     if (list.empty()) {
       vec.push_back(deck.getId(SEVEN, static_cast<Suit>(i + 1)));
+      if (i == (SPADE - 1)) { // if 7S has not been placed, this is the first turn of a round
+        vec.clear();
+        vec.push_back(deck.getId(SEVEN, SPADE));
+        return vec;
+      }
     } else {
       int front_rank = deck.getCard(list.front()).getRank();
       int back_rank = deck.getCard(list.back()).getRank();

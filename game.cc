@@ -34,21 +34,13 @@ bool Game::startRound() {
   int whichPlayer = deck.whoHas7S();
   std::cout << "A new round begins. It’s Player" << whichPlayer + 1 << "’s turn to play." << std::endl;
 
-  //first turn
-  table.printTable(deck, std::cout);
-
-  players[whichPlayer].get()->printHand(deck, std::cout);
-  players[whichPlayer].get()->printLPlays(table, deck, std::cout);
-  int cardId = deck.getId(SEVEN, SPADE);
-  players[whichPlayer].get()->playCard(table, deck, cardId);
-  std::cout << std::endl;
   
-  for (int i{1}; i < 52; i++) {
-    whichPlayer++;
+  for (int i{0}; i < 52; i++) {
     table.printTable(deck, std::cout);
     if (players[whichPlayer % 4].get()->playerTurn(table, deck)){
       return true;
     } 
+    whichPlayer++;
   }
   // Round ends
   // update scores
