@@ -16,8 +16,7 @@ Game::Game(int seed): deck{Deck(seed)}, table{Table()} {
 
 bool Game::gameOver() {
   for (int i{0}; i < 4; i++) {
-    Player * player = players[i].get();
-    if (player->score() >= 80) {
+    if (scores[i] >= 80) {
       return true;
     }
   }
@@ -57,7 +56,9 @@ bool Game::startRound() {
 }
 
 void Game::startGame() {
+  // int counter = 0;
   while(!gameOver()) {
+    // std::cout << "Counter: " << counter++ << std::endl;
     if (startRound()) {
       return;
     } 
@@ -71,6 +72,7 @@ void Game::startGame() {
   }
   // declare winner
   for (int i{0}; i < 4; i++) {
+    std::cout << "player "<< i + 1 << "'s score: " << scores[i] << std::endl;
     if (scores[i] == minScore) {
       std::cout << "Player" << (i + 1) << " wins!" << std::endl;
     }

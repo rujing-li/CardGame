@@ -93,7 +93,7 @@ bool Player::playCard(Table & table, Deck & deck, int cardId) {
           std::cout << "Player " << playerNum << "plays " << deck.getCard(cardId).cardToString() << "." << std::endl;  
           return false;
         } else {
-          ++it;
+          ++that;
         }
       }
       std::cout << "Logic Error." << std::endl;
@@ -118,7 +118,7 @@ bool Player::discardCard(Table & table, Deck & deck, int cardId) {
       it = hand.erase(it);
       // add to discards
       discards.push_back(cardId);
-      std::cout << "Player " << playerNum << "discards " << deck.getCard(cardId).cardToString() << "." << std::endl;  
+      std::cout << "Player " << playerNum << " discards " << deck.getCard(cardId).cardToString() << "." << std::endl;  
       return false;
     } else {
       ++it;

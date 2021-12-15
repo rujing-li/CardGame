@@ -2,6 +2,7 @@
 #include "deck.h"
 #include "card.h"
 #include <iostream>
+#include <cassert>
 
 Table::Table() {
   std::deque<int> clubs, diamonds, hearts, spades;
@@ -50,6 +51,8 @@ std::vector<int> Table::potentialLegalPlays(Deck & deck) {
     } else {
       int front_rank = deck.getCard(list.front()).getRank();
       int back_rank = deck.getCard(list.back()).getRank();
+      assert(front_rank >= 1 && front_rank <= 13);
+      assert(back_rank >= 1 && back_rank <= 13);
       if (front_rank != ACE) {
         vec.push_back(deck.getId(static_cast<Rank>(front_rank - 1), static_cast<Suit>(i + 1)));
       }
