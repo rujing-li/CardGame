@@ -40,7 +40,7 @@ bool Player::playerTurn(Table & table, Deck & deck) {
 
   int code = strategy->playerTurnAlgrm(this, table, deck);
   if (code == 2) {
-    std::cout << " " << playerNum << " ragequits. A computer will now take over.";
+    std::cout << "Player " << playerNum << " ragequits. A computer will now take over.\n";
     changeStrategy(std::make_shared<ComputerStrategy>());
     strategy->playerTurnAlgrm(this, table, deck);
     return false;
@@ -52,14 +52,15 @@ bool Player::playerTurn(Table & table, Deck & deck) {
   }
 }
 
-int Player::score(Deck & deck) {
+int Player::updateScore(Deck & deck) {
   int score = 0;
-  std::cout << "Player " << playerNum << " score: ";
+  std::cout << "Player" << playerNum << "'s discards: ";
   for (auto it: discards) {
-    score += deck.getCard(it).getRank();
-    std::cout << deck.getCard(it).getRank() << "+";
+    Card card = deck.getCard(it);
+    std::cout << card.cardToString() << " ";
+    score += card.getRank();
   }
-  std::cout << "=" << score << std::endl;
+  std::cout << std::endl;
   return score;
 }
 

@@ -45,7 +45,11 @@ bool Game::startRound() {
   // Round ends
   // update scores
   for (int i{0}; i < 4; ++i) {
-      scores[i] += players[i].get()->score(deck);
+    int score_gained = players[i].get()->updateScore(deck);
+    std::cout << "Player" << i + 1 << "'s score: " << scores[i];
+    std::cout << " + " << score_gained << " = ";
+    scores[i] += score_gained;
+    std::cout << scores[i] << std::endl;
   }
   // clear table
   table.clearTable();
@@ -73,7 +77,6 @@ void Game::startGame() {
   }
   // declare winner
   for (int i{0}; i < 4; i++) {
-    std::cout << "player "<< i + 1 << "'s score: " << scores[i] << std::endl;
     if (scores[i] == minScore) {
       std::cout << "Player" << (i + 1) << " wins!" << std::endl;
     }
