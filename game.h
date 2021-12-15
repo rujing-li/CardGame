@@ -8,14 +8,14 @@
 class Game {
   Deck deck;
   Table table;
-  players std::vector<unique_ptr<Player>>;
-  scores std::vector<int>;
+  std::vector<std::unique_ptr<Player>> players;
+  std::vector<int> scores;
   // if returns true, terminate the program immediately
   bool startRound();
   bool gameOver();
  public:
   Game(int seed);
   // if returns true, terminate the program immediately
-  bool startGame();
+  void startGame();
 };
 #endif

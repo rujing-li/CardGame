@@ -1,15 +1,17 @@
 #include "game.h"
+#include <climits>
 
-Game::Game(int seed): deck{Deck(seed)}, table{Table()},
- players{vector<unique_ptr<Player>>}, scores{vector<int>} {
-  players.push_back(make_unique<Player>());
-  players.push_back(make_unique<Player>());
-  players.push_back(make_unique<Player>());
-  players.push_back(make_unique<Player>());
-  scores.push_back(0);
-  scores.push_back(0);
-  scores.push_back(0);
-  scores.push_back(0);
+Game::Game(int seed): deck{Deck(seed)}, table{Table()} {
+  for (int i{0}; i < 4; i++) {
+    PType pType;
+    char type;
+    std::cout << "Is Player " << i + 1 << " a human (h) or a computer (c)?" << std::endl;
+    std::cin >> type;
+    if (type == 'c') pType = COMPUTER;
+    if (type == 'h') pType = HUMAN;
+    players.push_back(std::make_unique<Player>(i + 1, pType));
+    scores.push_back(0);
+  }
 }
 
 bool Game::gameOver() {
@@ -26,7 +28,8 @@ bool Game::startRound() {
   // suffle deck and deal cards
   deck.shuffle();
   for (int i{0}; i < 4; ++i) {
-    players[i].get()->dealHand(deck.dealCard(i));
+    // players[i].get()->dealHand(deck.dealCards(i));
+    players[i].get()->dealHand();
   }
   // start Round
   // determine who has 7S
@@ -42,21 +45,21 @@ bool Game::startRound() {
   // Round ends
   // update scores
   for (int i{0}; i < 4; ++i) {
-      scores[i] += players[i].score();
+      scores[i] += players[i].get()->score();
   }
   // clear table
   table.clearTable();
   // clear discards in each player
   for (int i{0}; i < 4; ++i) {
-    players[i].clearDiscards();
+    players[i].get()->clearDiscards();
   }
   return false;
 }
 
-bool Game::startGame() {
+void Game::startGame() {
   while(!gameOver()) {
     if (startRound()) {
-      return true;
+      return;
     } 
   }
   // find the min score
@@ -72,5 +75,4 @@ bool Game::startGame() {
       std::cout << "Player" << (i + 1) << " wins!" << std::endl;
     }
   }
-  return false;
 }

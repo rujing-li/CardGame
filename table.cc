@@ -63,7 +63,6 @@ std::vector<int> Table::potentialLegalPlays(Deck & deck) {
 
 std::ostream & Table::printTable(Deck & deck, std::ostream & out) {
   out << "Cards on the table:\n";
-  int i = 1;
   for (int i{0}; i < 4; i++) {
     std::deque<int> suit = fourSuits[i];
     switch(i) {

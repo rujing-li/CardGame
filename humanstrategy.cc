@@ -1,34 +1,38 @@
 #include "humanstrategy.h"
-
+#include "deck.h"
+#include "table.h"
+#include "player.h"
+#include <string>
+#include <iostream>
 int HumanStrategy::playerTurnAlgrm(Player * player, Table & table, Deck & deck) {
   while(true) {
     std::string command;
     std::cin >> command;
     if (command == "quit") { 
       return 1;
-    } else if (command == "ragequit"){
+    } else if (command == "ragequit") {
       return 2;
-    } else if (command == "deck"){
+    } else if (command == "deck") {
       deck.printDeck(std::cout);
-    } else if (command == "play"){
+    } else if (command == "play") {
       std::string cStr;
       std::cin >> cStr;
       Card card;
       if (strToCard(cStr, card)) {
         continue;
       }      
-      if (player->playCard(table, deck, deck.getId(card.rank, card.suit))) { 
+      if (player->playCard(table, deck, deck.getId(card.getRank(), card.getSuit()))) { 
         continue;
       }
       return 0;
-    } else if (command == "discard"){
+    } else if (command == "discard") {
       std::string cStr;
       std::cin >> cStr;
       Card card;
       if (strToCard(cStr, card)) {
         continue;
       }      
-      if (player->discardCard(deck.getId(card.rank, card.suit))) {
+      if (player->discardCard(table, deck, deck.getId(card.getRank(), card.getSuit()))) {
         std::cout << "Try again." << std::endl;
         continue;
       }
@@ -36,14 +40,13 @@ int HumanStrategy::playerTurnAlgrm(Player * player, Table & table, Deck & deck) 
     } else {
       std::cout << "Wrong command. Try again." << std::endl;
     }
+  } 
 }
-
 HumanStrategy::~HumanStrategy() {}
 
 bool strToCard(std::string str, Card & card) {
   char rank = str[0];
   char suit = str[1];
-  Card card;
   if (rank <= '9' && rank >= '2') {
     card.setRank(static_cast<Rank>(rank - '0'));
   } else {
@@ -85,5 +88,6 @@ bool strToCard(std::string str, Card & card) {
       std::cout << "Invalid Rank. Try Again. " << std::endl;
       return true;
   }
+  return false;
 }
 

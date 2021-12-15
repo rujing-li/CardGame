@@ -1,6 +1,8 @@
 #include "player.h"
 #include <iostream>
-
+#include <cassert>
+#include "computerstrategy.h"
+#include "humanstrategy.h"
 Player::Player(int playerNum, PType pType) : playerNum{playerNum} {
   if (pType == COMPUTER) { 
     strategy = std::make_shared<ComputerStrategy>();
@@ -9,13 +11,74 @@ Player::Player(int playerNum, PType pType) : playerNum{playerNum} {
   }
 }
 
-bool Player::canPlay(Deck & deck) {
-  std::vector<int> vec = legalPlays(deck);
+void Player::changeStrategy(std::shared_ptr<Strategy> strg) {
+  strategy = strg;
+}
+
+std::ostream & Player::printHand(Deck & deck, std::ostream & out){
+  out << "Your hand: ";
+  for (auto cardId: hand) {
+    out << deck.getCard(cardId).cardToString() << " ";
+  }
+  out << "\n";
+  return out;
+}
+
+std::ostream & Player::printLPlays(Table & table, Deck & deck, std::ostream & out){
+  out << "Legal plays: ";
+  std::vector<int> lPlays = legalPlays(table, deck);
+  for (int cardId: lPlays) {
+    out << deck.getCard(cardId).cardToString() << " ";
+  }
+  out << std::endl;
+  return out;
+}
+
+bool Player::playerTurn(Table & table, Deck & deck) {
+  printHand(deck, std::cout);
+  printLPlays(table, deck, std::cout);
+
+  int code = strategy->playerTurnAlgrm(this, table, deck);
+  if (code == 2) {
+    std::cout << "Player " << playerNum << " ragequits. A computer will now take over.";
+    changeStrategy(std::make_shared<ComputerStrategy>());
+    strategy->playerTurnAlgrm(this, table, deck);
+    return false;
+  } else if (code == 1) {
+    return true; // terminate program
+  } else {
+    assert(code == 0);
+    return false;
+  }
+}
+
+int Player::score() {
+  int score = 0;
+  for (auto it: discards) {
+    score += it;
+  }
+  return score;
+}
+
+std::vector<int> Player::legalPlays(Table & table, Deck & deck){
+  std::vector<int> ret;
+  std::vector<int> vec = table.potentialLegalPlays(deck);
+  for (auto i : vec) {
+    for (auto j : hand) {
+      if (i == j) {
+        ret.push_back(i);
+      }
+    }
+  }
+  return ret;
+}
+
+bool Player::canPlay(Table & table, Deck & deck) {
+  std::vector<int> vec = legalPlays(table, deck);
   return (vec.size() != 0);
 }
 
 bool Player::playCard(Table & table, Deck & deck, int cardId) {
-
   std::vector<int> lPlays = legalPlays(table, deck);
   for (auto it: lPlays) {
     if (it == cardId) {
@@ -41,9 +104,9 @@ bool Player::playCard(Table & table, Deck & deck, int cardId) {
   return true;
 }
 
-bool Player::discardCard(int cardId) {
+bool Player::discardCard(Table & table, Deck & deck, int cardId) {
   // verify condition to discard
-  if (canPlay()) {
+  if (canPlay(table, deck)) {
     std::cout << "You have a legal play. You may not discard." << std::endl;
     return true;
   }
@@ -55,6 +118,7 @@ bool Player::discardCard(int cardId) {
       it = hand.erase(it);
       // add to discards
       discards.push_back(cardId);
+      std::cout << "Player " << playerNum << "discards " << deck.getCard(cardId).cardToString() << "." << std::endl;  
       return false;
     } else {
       ++it;
@@ -67,71 +131,20 @@ int Player::handFrontCard() {
   return hand[0];
 }
 
-void Player::changeStrategy(std::shared_ptr<Strategy> strg) {
-  strategy = strg;
-}
-
-std::iostream & printHand(Deck & deck, std::iostream & out){
-  std::cout << "Your Hand:";
-  for (int cardId: hand) {
-    std::cout << deck.getCard(deck, cardId).cardToString() << " ";
-  }
-  std::cout << std::endl;
-}
-
-std::iostream & printLPlays(Table & table, Deck & deck, std::iostream & out){
-  std::cout << "Legal Plays:";
-  vector<int> lPlays = legalPlays(table, deck);
-  for (int cardId: lPlays) {
-    std::cout << deck.getCard(deck, cardId).cardToString() << " ";
-  }
-  std::cout << std::endl;
-}
-
-bool Player::playerTurn(Table & table, Deck & deck) {
-  printHand(deck, std::cout);
-  printLPlays(deck, std::cout);
-
-  int code = strategy->playerTurnAlgrm(this, table, deck);
-  if (code == 2) {
-    std::cout << "Player " << playerNum << " ragequits. A computer will now take over."
-    changeStrategy(std::make_shared<ComputerStrategy>());
-    strategy->playerTurnAlgrm(this, table, deck);
-  } else if (code == 1) {
-    return true; // terminate program
-  } else {
-    assert(code == 0);
-    return false;
-  }
-}
-
-void Player::score() {
-  int score = 0;
-  for (auto it: discards) {
-    score += it;
-  }
-  return score;
-}
-
-std::vector<int> Player::legalPlays(Table & table, Deck & deck){
-  std::vector<int> ret;
-  std::vector<int> vec = table.potentialLegalPlays(deck);
-  for (auto i : vec) {
-    for (auto j : hand) {
-      if (i == j) {
-        ret.push_back(i);
-      }
-    }
-  }
-  return ret;
-}
-
-void clearDiscards() {
+void Player::clearDiscards() {
   discards.clear();
 }
 
-void Player::dealHand(vector<int> cards){
+// void Player::dealHand(std::vector<int> cards){
+//   hand.clear();
+//   assert(cards.size() == 13);
+//   hand = cards;
+// }
+void Player::dealHand(){
   hand.clear();
-  assert(cards.size() == 13);
+  std::vector<int> cards;
+  for (int i{0}; i < 13; i++) {
+    cards.push_back((playerNum - 1) * 13 + i);
+  }
   hand = cards;
 }

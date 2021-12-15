@@ -1,5 +1,9 @@
 #ifndef STRATEGY_H
 #define STRATEGY_H
+class Player;
+class Table;
+class Deck;
+class Card;
 class Strategy {
  public:
   // exit code (0:good, 1:terminate program, 

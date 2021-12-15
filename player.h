@@ -14,10 +14,6 @@ class Player {
   std::vector<int> hand;
   std::vector<int> discards;
   std::shared_ptr<Strategy> strategy;
-  bool canPlay(Deck & deck);
-  bool playCard(Table & table, Deck & deck, int cardId);
-  bool discardCard(int cardId);
-  int handFrontCard();
   void changeStrategy(std::shared_ptr<Strategy> strg);
   std::ostream & printHand(Deck & deck, std::ostream & out);
   std::ostream & printLPlays(Table & table, Deck & deck, std::ostream & out);
@@ -26,7 +22,11 @@ class Player {
   bool playerTurn(Table & table, Deck & deck);
   int score();
   std::vector<int> legalPlays(Table & table, Deck & deck);
+  bool canPlay(Table & table, Deck & deck);
+  bool playCard(Table & table, Deck & deck, int cardId);
+  bool discardCard(Table & table, Deck & deck, int cardId);
+  int handFrontCard();
   void clearDiscards();
-  void dealHand(vector<int> cards);
+  void dealHand();
 };
 #endif

@@ -1,8 +1,11 @@
-#include "card.h"
-#include "deck.h"
-#include "table.h"
-#include <iostream>
-#include <vector>
+// #include "card.h"
+// #include "deck.h"
+// #include "table.h"
+#include "game.h"
+// #include <iostream>
+// #include <vector>
+#include <string>
+
 int main(int argc, char * argv[]) {
   // Card card;
   // Card card2(THREE, SPADE);
@@ -30,7 +33,5 @@ int main(int argc, char * argv[]) {
     seed = std::stoi(argv[1]);
   }
   Game game(seed);
-  if (game.startGame()) {
-    return 0;
-  }
+  game.startGame();
 }
