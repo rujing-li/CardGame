@@ -52,11 +52,14 @@ bool Player::playerTurn(Table & table, Deck & deck) {
   }
 }
 
-int Player::score() {
+int Player::score(Deck & deck) {
   int score = 0;
+  std::cout << "Player " << playerNum << " score: ";
   for (auto it: discards) {
-    score += it;
+    score += deck.getCard(it).getRank();
+    std::cout << deck.getCard(it).getRank() << "+";
   }
+  std::cout << "=" << score << std::endl;
   return score;
 }
 

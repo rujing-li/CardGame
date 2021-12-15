@@ -53,7 +53,7 @@ bool Game::startRound() {
   // Round ends
   // update scores
   for (int i{0}; i < 4; ++i) {
-      scores[i] += players[i].get()->score();
+      scores[i] += players[i].get()->score(deck);
   }
   // clear table
   table.clearTable();

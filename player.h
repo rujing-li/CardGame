@@ -18,7 +18,7 @@ class Player {
  public:
   Player(int playerNum, PType pType);
   bool playerTurn(Table & table, Deck & deck);
-  int score();
+  int score(Deck & deck);
   std::vector<int> legalPlays(Table & table, Deck & deck);
   std::ostream & printHand(Deck & deck, std::ostream & out);
   std::ostream & printLPlays(Table & table, Deck & deck, std::ostream & out);
