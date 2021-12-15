@@ -72,11 +72,11 @@ bool strToCard(std::string str, Card & card) {
     }
   }
   switch(suit) {
-    case 'D':
-      card.setSuit(DIAMOND);
-      break;
     case 'C':
       card.setSuit(CLUB);
+      break;
+    case 'D':
+      card.setSuit(DIAMOND);
       break;
     case 'H':
       card.setSuit(HEART);

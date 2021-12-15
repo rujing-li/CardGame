@@ -70,16 +70,16 @@ std::ostream & Table::printTable(Deck & deck, std::ostream & out) {
     std::deque<int> suit = fourSuits[i];
     switch(i) {
       case 0:
-        out << "Clubs:";
+        out << "CLUBS: ";
         break;
       case 1:
-        out << "Diamonds:";
+        out << "DIAMONDS: ";
         break;
       case 2:
-        out << "Hearts:";
+        out << "HEARTS: ";
         break;
       case 3:
-        out << "Spades:";
+        out << "SPADES: ";
         break;
     }
     for (auto j: suit) {

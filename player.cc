@@ -40,7 +40,7 @@ bool Player::playerTurn(Table & table, Deck & deck) {
 
   int code = strategy->playerTurnAlgrm(this, table, deck);
   if (code == 2) {
-    std::cout << "Player " << playerNum << " ragequits. A computer will now take over.";
+    std::cout << " " << playerNum << " ragequits. A computer will now take over.";
     changeStrategy(std::make_shared<ComputerStrategy>());
     strategy->playerTurnAlgrm(this, table, deck);
     return false;
@@ -63,8 +63,8 @@ int Player::score() {
 std::vector<int> Player::legalPlays(Table & table, Deck & deck){
   std::vector<int> ret;
   std::vector<int> vec = table.potentialLegalPlays(deck);
-  for (auto i : vec) {
-    for (auto j : hand) {
+  for (auto i : hand) {
+    for (auto j : vec) {
       if (i == j) {
         ret.push_back(i);
       }
@@ -90,7 +90,8 @@ bool Player::playCard(Table & table, Deck & deck, int cardId) {
         if ((*that) == cardId) {
           // erase from hand
           that = hand.erase(that);
-          std::cout << "Player " << playerNum << "plays " << deck.getCard(cardId).cardToString() << "." << std::endl;  
+          std::cout << "Player" << playerNum << " plays " << deck.getCard(cardId).cardToString() << std::endl;  
+          std::cout << std::endl;
           return false;
         } else {
           ++that;
@@ -118,7 +119,8 @@ bool Player::discardCard(Table & table, Deck & deck, int cardId) {
       it = hand.erase(it);
       // add to discards
       discards.push_back(cardId);
-      std::cout << "Player " << playerNum << " discards " << deck.getCard(cardId).cardToString() << "." << std::endl;  
+      std::cout << "Player" << playerNum << " discards " << deck.getCard(cardId).cardToString() << std::endl;  
+      std::cout << std::endl;
       return false;
     } else {
       ++it;
@@ -135,11 +137,6 @@ void Player::clearDiscards() {
   discards.clear();
 }
 
-// void Player::dealHand(std::vector<int> cards){
-//   hand.clear();
-//   assert(cards.size() == 13);
-//   hand = cards;
-// }
 void Player::dealHand(){
   hand.clear();
   std::vector<int> cards;

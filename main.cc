@@ -1,5 +1,5 @@
-// #include "card.h"
-// #include "deck.h"
+#include "card.h"
+#include "deck.h"
 // #include "table.h"
 #include "game.h"
 // #include <iostream>
@@ -7,16 +7,16 @@
 #include <string>
 
 int main(int argc, char * argv[]) {
-  // Card card;
-  // Card card2(THREE, SPADE);
-  // Deck deck(20840325);
-  // deck.printDeck(std::cout);
-  // std::cout << std::endl;
-  // deck.shuffle();
-  // deck.printDeck(std::cout);
-  // card = deck.getCard(34);
-  // std::cout << card.cardToString() << std::endl; 
-  // std::cout << deck.whoHas7S() << std::endl;
+  Card card;
+  Card card2(THREE, SPADE);
+  Deck deck(20840325);
+  deck.printDeck(std::cout);
+  std::cout << std::endl;
+  deck.shuffle();
+  deck.printDeck(std::cout);
+  card = deck.getCard(34);
+  std::cout << card.cardToString() << std::endl; 
+  std::cout << deck.whoHas7S() << std::endl;
 
   // Table table;
   // table.printTable(&deck, std::cout);

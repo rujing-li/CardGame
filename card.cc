@@ -48,10 +48,10 @@ std::string Card::cardToString() {
   char cSuit;
   switch(suit) {
     case 1:
-      cSuit = 'D';
+      cSuit = 'C';
       break;
     case 2:
-      cSuit = 'C';
+      cSuit = 'D';
       break;
     case 3:
       cSuit = 'H';

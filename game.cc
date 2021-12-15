@@ -5,7 +5,7 @@ Game::Game(int seed): deck{Deck(seed)}, table{Table()} {
   for (int i{0}; i < 4; i++) {
     PType pType;
     char type;
-    std::cout << "Is Player " << i + 1 << " a human (h) or a computer (c)?" << std::endl;
+    std::cout << "Is Player" << i + 1 << " a human (h) or a computer (c)?" << std::endl;
     std::cin >> type;
     if (type == 'c') pType = COMPUTER;
     if (type == 'h') pType = HUMAN;
@@ -27,19 +27,28 @@ bool Game::startRound() {
   // suffle deck and deal cards
   deck.shuffle();
   for (int i{0}; i < 4; ++i) {
-    // players[i].get()->dealHand(deck.dealCards(i));
     players[i].get()->dealHand();
   }
   // start Round
   // determine who has 7S
   int whichPlayer = deck.whoHas7S();
   std::cout << "A new round begins. It’s Player" << whichPlayer + 1 << "’s turn to play." << std::endl;
-  for (int i{0}; i < 52; i++) {
+
+  //first turn
+  table.printTable(deck, std::cout);
+
+  players[whichPlayer].get()->printHand(deck, std::cout);
+  players[whichPlayer].get()->printLPlays(table, deck, std::cout);
+  int cardId = deck.getId(SEVEN, SPADE);
+  players[whichPlayer].get()->playCard(table, deck, cardId);
+  std::cout << std::endl;
+  
+  for (int i{1}; i < 52; i++) {
+    whichPlayer++;
     table.printTable(deck, std::cout);
     if (players[whichPlayer % 4].get()->playerTurn(table, deck)){
       return true;
     } 
-    whichPlayer++;
   }
   // Round ends
   // update scores

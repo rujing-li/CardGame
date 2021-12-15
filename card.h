@@ -4,7 +4,7 @@
 
 enum Rank { NORANK, ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
   NINE, TEN, JACK, QUEEN, KING };
-enum Suit { NOSUIT, DIAMOND, CLUB, HEART, SPADE };
+enum Suit { NOSUIT, CLUB, DIAMOND, HEART, SPADE };
 
 class Card {
   Rank rank;
