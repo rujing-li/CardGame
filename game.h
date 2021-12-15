@@ -10,10 +10,12 @@ class Game {
   Table table;
   players std::vector<unique_ptr<Player>>;
   scores std::vector<int>;
-  void startRound();
+  // if returns true, terminate the program immediately
+  bool startRound();
   bool gameOver();
  public:
   Game(int seed);
-  void startGame();
+  // if returns true, terminate the program immediately
+  bool startGame();
 };
 #endif

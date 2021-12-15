@@ -22,16 +22,23 @@ bool Game::gameOver() {
   return false;
 }
 
-void Game::startRound() {
+bool Game::startRound() {
   // suffle deck and deal cards
   deck.shuffle();
   for (int i{0}; i < 4; ++i) {
     players[i].get()->dealHand(deck.dealCard(i));
   }
-  // determine who has 7S
-  int SSPlayer = deck.whoHas7S();
   // start Round
-
+  // determine who has 7S
+  int whichPlayer = deck.whoHas7S();
+  std::cout << "A new round begins. It’s Player" << whichPlayer + 1 << "’s turn to play." << std::endl;
+  for (int i{0}; i < 52; i++) {
+    table.printTable(deck, std::cout);
+    if (players[whichPlayer % 4].get()->playerTurn(table, deck)){
+      return true;
+    } 
+    whichPlayer++;
+  }
   // Round ends
   // update scores
   for (int i{0}; i < 4; ++i) {
@@ -43,11 +50,14 @@ void Game::startRound() {
   for (int i{0}; i < 4; ++i) {
     players[i].clearDiscards();
   }
+  return false;
 }
 
-void Game::startGame() {
+bool Game::startGame() {
   while(!gameOver()) {
-    startRound();
+    if (startRound()) {
+      return true;
+    } 
   }
   // find the min score
   int minScore = INT_MAX;
@@ -62,4 +72,5 @@ void Game::startGame() {
       std::cout << "Player" << (i + 1) << " wins!" << std::endl;
     }
   }
+  return false;
 }

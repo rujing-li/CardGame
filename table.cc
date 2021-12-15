@@ -4,9 +4,9 @@
 #include <iostream>
 
 Table::Table() {
-  std::deque<int> diamonds, clubs, hearts, spades;
-  fourSuits.push_back(diamonds);
+  std::deque<int> clubs, diamonds, hearts, spades;
   fourSuits.push_back(clubs);
+  fourSuits.push_back(diamonds);
   fourSuits.push_back(hearts);
   fourSuits.push_back(spades);
 }
@@ -62,15 +62,25 @@ std::vector<int> Table::potentialLegalPlays(Deck & deck) {
 }
 
 std::ostream & Table::printTable(Deck & deck, std::ostream & out) {
-  out << "Printing Table: \n";
-  for (auto i: fourSuits) {
-    for (auto j: i) {
-      out << j << " ";
+  out << "Cards on the table:\n";
+  int i = 1;
+  for (int i{0}; i < 4; i++) {
+    std::deque<int> suit = fourSuits[i];
+    switch(i) {
+      case 0:
+        out << "Clubs:";
+        break;
+      case 1:
+        out << "Diamonds:";
+        break;
+      case 2:
+        out << "Hearts:";
+        break;
+      case 3:
+        out << "Spades:";
+        break;
     }
-    out << "\n";
-  }
-  for (auto i: fourSuits) {
-    for (auto j: i) {
+    for (auto j: suit) {
       Card card = deck.getCard(j);
       out << card.cardToString() << " ";
     }

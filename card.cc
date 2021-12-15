@@ -47,19 +47,20 @@ std::string Card::cardToString() {
   str += cRank;
   char cSuit;
   switch(suit) {
-      case 1:
-        cSuit = 'D';
-        break;
-      case 2:
-        cSuit = 'C';
-        break;
-      case 3:
-        cSuit = 'H';
-        break;
-      case 4:
-        cSuit = 'S';
-        break;  
-    }
+    case 1:
+      cSuit = 'D';
+      break;
+    case 2:
+      cSuit = 'C';
+      break;
+    case 3:
+      cSuit = 'H';
+      break;
+    case 4:
+      cSuit = 'S';
+      break;  
+  }
     str += cSuit;
   return str;
 }
+
