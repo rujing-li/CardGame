@@ -11,8 +11,8 @@ Table::Table() {
   fourSuits.push_back(spades);
 }
 
-bool Table::addCardToTable(Deck * deck, int cardId) {
-  Card card = deck->getCard(cardId);
+bool Table::addCardToTable(Deck & deck, int cardId) {
+  Card card = deck.getCard(cardId);
   Suit s = card.getSuit();
   Rank r = card.getRank();
   if (s == NOSUIT) {
@@ -28,8 +28,8 @@ bool Table::addCardToTable(Deck * deck, int cardId) {
         return false;
       }
     } else {
-      int front_rank = deck->getCard(list.front()).getRank();
-      int back_rank = deck->getCard(list.back()).getRank();
+      int front_rank = deck.getCard(list.front()).getRank();
+      int back_rank = deck.getCard(list.back()).getRank();
       if ((front_rank - r) == 1) list.push_front(cardId);
       else if ((r - back_rank) == 1) list.push_back(cardId);
       else { 
@@ -41,27 +41,27 @@ bool Table::addCardToTable(Deck * deck, int cardId) {
   }
 }
 
-std::vector<int> Table::potentialLegalPlays(Deck * deck) {
+std::vector<int> Table::potentialLegalPlays(Deck & deck) {
   std::vector<int> vec;  
   for (int i = 0; i < 4; i++) {
     std::deque<int> & list = fourSuits[i];
     if (list.empty()) {
-      vec.push_back(deck->getId(SEVEN, static_cast<Suit>(i + 1)));
+      vec.push_back(deck.getId(SEVEN, static_cast<Suit>(i + 1)));
     } else {
-      int front_rank = deck->getCard(list.front()).getRank();
-      int back_rank = deck->getCard(list.back()).getRank();
+      int front_rank = deck.getCard(list.front()).getRank();
+      int back_rank = deck.getCard(list.back()).getRank();
       if (front_rank != ACE) {
-        vec.push_back(deck->getId(static_cast<Rank>(front_rank - 1), static_cast<Suit>(i + 1)));
+        vec.push_back(deck.getId(static_cast<Rank>(front_rank - 1), static_cast<Suit>(i + 1)));
       }
       if (back_rank != KING) {
-        vec.push_back(deck->getId(static_cast<Rank>(back_rank + 1), static_cast<Suit>(i + 1)));
+        vec.push_back(deck.getId(static_cast<Rank>(back_rank + 1), static_cast<Suit>(i + 1)));
       }      
     }
   }
   return vec;
 }
 
-std::ostream & Table::printTable(Deck * deck, std::ostream & out) {
+std::ostream & Table::printTable(Deck & deck, std::ostream & out) {
   out << "Printing Table: \n";
   for (auto i: fourSuits) {
     for (auto j: i) {
@@ -71,10 +71,16 @@ std::ostream & Table::printTable(Deck * deck, std::ostream & out) {
   }
   for (auto i: fourSuits) {
     for (auto j: i) {
-      Card card = deck->getCard(j);
+      Card card = deck.getCard(j);
       out << card.cardToString() << " ";
     }
     out << "\n";
   }
   return out;
+}
+
+void Table::clearTable() {
+  for (int i{0}; i < 4; i++) {
+    fourSuits[i].clear();
+  }
 }

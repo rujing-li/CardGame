@@ -38,8 +38,6 @@ int Deck::getId(Rank rank, Suit suit){
   return -1;
 }
 
-
-
 std::ostream & Deck::printDeck(std::ostream & out) {
   for (int i{0}; i < 4; i++) {
     for (int j{0}; j < 12; j++) {
@@ -50,4 +48,14 @@ std::ostream & Deck::printDeck(std::ostream & out) {
     out << deck[12 + i * 13].get()->cardToString() << "\n";
   }
   return out;
+}
+
+int Deck::whoHas7S() {
+  for (int i{0}; i < 52; i++) {
+    if (SEVEN == deck[i].get()->getRank()) {
+      if (SPADE == deck[i].get()->getSuit()) {
+        return (i / 13);
+      }
+    }
+  }
 }

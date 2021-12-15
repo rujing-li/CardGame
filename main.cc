@@ -13,15 +13,17 @@ int main() {
   deck.printDeck(std::cout);
   card = deck.getCard(34);
   std::cout << card.cardToString() << std::endl; 
+  std::cout << deck.whoHas7S() << std::endl;
+  // Table table;
+  // table.printTable(&deck, std::cout);
+  // int temp;
+  // while (std::cin >> temp) {
+  //   table.addCardToTable(&deck, temp);
+  //   table.printTable(&deck, std::cout);
+  // }
+  // std::vector<int> pLegalPlays = table.potentialLegalPlays(&deck);
+  // for (auto it: pLegalPlays) std::cout << deck.getCard(it).cardToString() << " ";
+  // std::cout << std::endl;
 
-  Table table;
-  table.printTable(&deck, std::cout);
-  int temp;
-  while (std::cin >> temp) {
-    table.addCardToTable(&deck, temp);
-    table.printTable(&deck, std::cout);
-  }
-  std::vector<int> pLegalPlays = table.potentialLegalPlays(&deck);
-  for (auto it: pLegalPlays) std::cout << deck.getCard(it).cardToString() << " ";
-  std::cout << std::endl;
+  
 }
