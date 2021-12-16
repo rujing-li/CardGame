@@ -15,18 +15,20 @@ class Player {
   std::vector<int> discards;
   std::shared_ptr<Strategy> strategy;
   void changeStrategy(std::shared_ptr<Strategy> strg);
- public:
-  Player(int playerNum, PType pType);
-  bool playerTurn(Table & table, Deck & deck);
-  int updateScore(Deck & deck);
-  std::vector<int> legalPlays(Table & table, Deck & deck);
   std::ostream & printHand(Deck & deck, std::ostream & out);
   std::ostream & printLPlays(Table & table, Deck & deck, std::ostream & out);
   bool canPlay(Table & table, Deck & deck);
   bool playCard(Table & table, Deck & deck, int cardId);
   bool discardCard(Table & table, Deck & deck, int cardId);
   int handFrontCard();
-  void clearDiscards();
+ public:
+  Player(int playerNum, PType pType);
+  bool playerTurn(Table & table, Deck & deck);
+  int updateScore(Deck & deck);
+  std::vector<int> legalPlays(Table & table, Deck & deck);
+  void clearDiscards(); 
   void dealHand();
+  friend class HumanStrategy;
+  friend class ComputerStrategy;
 };
 #endif
