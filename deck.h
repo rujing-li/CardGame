@@ -14,6 +14,5 @@ class Deck {
   int getId(Rank rank, Suit suit);
   std::ostream & printDeck(std::ostream & out);
   int whoHas7S();
-  // std::vector<int> dealCards(int player);
 };
 #endif

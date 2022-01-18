@@ -60,10 +60,3 @@ int Deck::whoHas7S() {
   }
   return -1;
 }
-
-// std::vector<int> Deck::dealCards(int player) {
-//   int start = 13 * player; 
-//   for (int i{0}; i < 13; i++) {
-//     deck[start + i].get()->get
-//   }
-// }
