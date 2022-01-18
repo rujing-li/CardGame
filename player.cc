@@ -3,6 +3,7 @@
 #include <cassert>
 #include "computerstrategy.h"
 #include "humanstrategy.h"
+
 Player::Player(int playerNum, PType pType) : playerNum{playerNum} {
   if (pType == COMPUTER) { 
     strategy = std::make_shared<ComputerStrategy>();

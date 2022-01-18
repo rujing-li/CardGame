@@ -5,6 +5,7 @@
 #include "player.h"
 #include <memory>
 #include <vector>
+
 class Game {
   Deck deck;
   Table table;

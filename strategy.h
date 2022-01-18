@@ -1,5 +1,6 @@
 #ifndef STRATEGY_H
 #define STRATEGY_H
+
 class Player;
 class Table;
 class Deck;

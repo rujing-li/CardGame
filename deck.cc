@@ -1,7 +1,7 @@
-#include "deck.h"
 #include <algorithm>
 #include <iostream>
 #include <memory>
+#include "deck.h"
 
 Deck::Deck(int seed): rng{std::default_random_engine(seed)} {
   for (int i{1}; i <= 4; i++) {

@@ -4,6 +4,7 @@
 #include "player.h"
 #include <string>
 #include <iostream>
+
 int HumanStrategy::playerTurnAlgrm(Player * player, Table & table, Deck & deck) {
   while(true) {
     std::string command;
@@ -90,4 +91,3 @@ bool strToCard(std::string str, Card & card) {
   }
   return false;
 }
-

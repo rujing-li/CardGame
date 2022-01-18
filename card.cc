@@ -63,4 +63,3 @@ std::string Card::cardToString() {
     str += cSuit;
   return str;
 }
-
